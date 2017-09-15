@@ -42,6 +42,7 @@
 		list-style: none;
 		overflow: hidden;
 	}
+	li{cursor: pointer;}
 	
 	.left-nav li {
 		list-style: none;
