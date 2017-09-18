@@ -6,16 +6,16 @@
 					<el-tabs v-model="activeName">
 						<el-tab-pane label="点餐" name="first">
 							<el-table :data="foodListData" border style="width: 100%">
-								<el-table-column prop="name" label="商品名字">
+								<el-table-column prop="goodsName" label="商品名字">
 								</el-table-column>
-								<el-table-column prop="num" label="量" width="50">
+								<el-table-column prop="count" label="量" width="50">
 								</el-table-column>
-								<el-table-column prop="money" label="金额" width="70">
+								<el-table-column prop="price" label="金额" width="70">
 								</el-table-column>
 								<el-table-column label="操作" width="100">
 									<template scope="scope">
-										<el-button type="text" size="small">查看</el-button>
-										<el-button type="text" size="small">编辑</el-button>
+										<el-button type="text" size="small" >查看</el-button>
+										<el-button type="text" size="small" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
 									</template>
 								</el-table-column>
 							</el-table>
@@ -39,9 +39,9 @@
 						</div>
 						<div class="often-list">
 							<ul>
-								<li v-for="item in oftenGoods" @click="addOrderList(goods)"> 
-									<span>{{item.goodsName}}</span>
-									<span>￥{{item.price}}元</span>
+								<li v-for="goods in oftenGoods" @click="addOrderList(goods)"> 
+									<span>{{goods.goodsName}}</span>
+									<span>￥{{goods.price}}元</span>
 								</li>
 
 							</ul>
@@ -50,7 +50,7 @@
 							<el-tabs v-model="activeNameSecond">
 								<el-tab-pane label="汉堡" name="first" class="list-css">
 									<ul>
-										<li v-for="item in typeFoodData.typeFoodHamburger">
+										<li v-for="item in typeFoodData.typeFoodHamburger" @click="addOrderList(item)">
 											<div class="type-detail">
 												<img :src='item.goodsImg' alt="" />
 												<p>{{item.goodsName}}</p>
@@ -61,7 +61,7 @@
 								</el-tab-pane>
 								<el-tab-pane label="小吃" name="second" class="list-css">
 									<ul>
-										<li v-for="item in typeFoodData.typeFoodSnack">
+										<li v-for="item in typeFoodData.typeFoodSnack" @click="addOrderList(item)">
 											<div class="type-detail">
 												<img :src='item.goodsImg' alt="" />
 												<p>{{item.goodsName}}</p>
@@ -73,7 +73,7 @@
 								</el-tab-pane>
 								<el-tab-pane label="饮料" name="third" class="list-css">
 									<ul>
-										<li v-for="item in typeFoodData.typeFoodDrink">
+										<li v-for="item in typeFoodData.typeFoodDrink" @click="addOrderList(item)">
 											<div class="type-detail">
 												<img :src='item.goodsImg' alt="" />
 												<p>{{item.goodsName}}</p>
@@ -116,134 +116,23 @@
 				activeName: 'first',
 				activeNameSecond: "first",
 				foodListData: [
-//				{
-//						name: '汉堡包',
-//						num: 3,
-//						money: 23
-//					},
-//					{
-//						name: '汽水',
-//						num: 8,
-//						money: 3.5
-//					},
-//					{
-//						name: '香辣鸡翅',
-//						num: 1,
-//						money: 16
-//					},
-//					{
-//						name: '香辣鸡腿堡',
-//						num: 2,
-//						money: 36
-//					}
+
 				],
 				oftenGoods: [
-					//				{
-					//						goodsId: 1,
-					//						goodsName: '香辣鸡腿堡',
-					//						price: 18
-					//					}, {
-					//						goodsId: 2,
-					//						goodsName: '田园鸡腿堡',
-					//						price: 15
-					//					}, {
-					//						goodsId: 3,
-					//						goodsName: '和风汉堡',
-					//						price: 15
-					//					}, {
-					//						goodsId: 4,
-					//						goodsName: '快乐全家桶',
-					//						price: 80
-					//					}, {
-					//						goodsId: 5,
-					//						goodsName: '脆皮炸鸡腿',
-					//						price: 10
-					//					}, {
-					//						goodsId: 6,
-					//						goodsName: '魔法鸡块',
-					//						price: 20
-					//					}, {
-					//						goodsId: 7,
-					//						goodsName: '可乐大杯',
-					//						price: 10
-					//					}, {
-					//						goodsId: 8,
-					//						goodsName: '雪顶咖啡',
-					//						price: 18
-					//					}, {
-					//						goodsId: 9,
-					//						goodsName: '大块鸡米花',
-					//						price: 15
-					//					}, {
-					//						goodsId: 20,
-					//						goodsName: '香脆鸡柳',
-					//						price: 17
-					//					}
-
+					
 				],
 				typeFoodData: [
 					typeFoodHamburger,
 					typeFoodSnack,
 					typeFoodDrink,
 					typeFoodMeal
-					//					{
-					//						goodsId: 1,
-					//						goodsImg: "http://7xjyw1.com1.z0.glb.clouddn.com/pos001.jpg",
-					//						goodsName: '香辣鸡腿堡',
-					//						price: 18
-					//					}, {
-					//						goodsId: 2,
-					//						goodsImg: "http://7xjyw1.com1.z0.glb.clouddn.com/pos002.jpg",
-					//						goodsName: '田园鸡腿堡',
-					//						price: 15
-					//					}, {
-					//						goodsId: 3,
-					//						goodsImg: "http://7xjyw1.com1.z0.glb.clouddn.com/pos004.jpg",
-					//						goodsName: '和风汉堡',
-					//						price: 15
-					//					}, {
-					//						goodsId: 4,
-					//						goodsImg: "http://7xjyw1.com1.z0.glb.clouddn.com/pos003.jpg",
-					//						goodsName: '快乐全家桶',
-					//						price: 80
-					//					}, {
-					//						goodsId: 5,
-					//						goodsImg: "http://7xjyw1.com1.z0.glb.clouddn.com/pos003.jpg",
-					//						goodsName: '脆皮炸鸡腿',
-					//						price: 10
-					//					}, {
-					//						goodsId: 6,
-					//						goodsImg: "http://7xjyw1.com1.z0.glb.clouddn.com/pos004.jpg",
-					//						goodsName: '魔法鸡块',
-					//						price: 20
-					//					}, {
-					//						goodsId: 7,
-					//						goodsImg: "http://7xjyw1.com1.z0.glb.clouddn.com/pos001.jpg",
-					//						goodsName: '可乐大杯',
-					//						price: 10
-					//					}, {
-					//						goodsId: 8,
-					//						goodsImg: "http://7xjyw1.com1.z0.glb.clouddn.com/pos003.jpg",
-					//						goodsName: '雪顶咖啡',
-					//						price: 18
-					//					}, {
-					//						goodsId: 9,
-					//						goodsImg: "http://7xjyw1.com1.z0.glb.clouddn.com/pos002.jpg",
-					//						goodsName: '大块鸡米花',
-					//						price: 15
-					//					}, {
-					//						goodsId: 20,
-					//						goodsImg: "http://7xjyw1.com1.z0.glb.clouddn.com/pos002.jpg",
-					//						goodsName: '香脆鸡柳',
-					//						price: 17
-					//					}
+				
 
 				],
 			}
 		},
 		methods:{
 			addOrderList(goods){
-				console.log(this);
 				this.totalCount = 0;
 				this.totalMoney = 0;
 				let isHave =false;
@@ -256,11 +145,14 @@
 				}
 				//根据isHave的指判断  存在++ 不存在push入数组
 				if(isHave){
-					let arr = this.foodListData.filter(o=>o.goodsId == goods.goodsId);
+					let arr = this.foodListData.filter(function(o){
+						return o.goodsId == goods.goodsId;				
+					});
 					arr[0].count++;
+					//console.log(arr);
+					//console.log(o=>o.goodsId == goods.goodsId);
 				}
 				else{
-					console.log(goods);
 					let newGoods = {
 						goodsId:goods.goodsId,
 						goodsName:goods.goodsName,
@@ -268,7 +160,12 @@
 						count:1
 					}
 					this.foodListData.push(newGoods);
+				//计算总价
+		
 				}
+			},
+			handleEdit(index, row){
+				console.log(index);
 			}
 		},
 		created() {	//在实例创建之后同步调用。此时实例已经结束解析选项，
@@ -279,7 +176,7 @@
 			//拉取常用商品数据
 			axios.post("http://jspang.com/DemoApi/oftenGoods.php")
 				.then(response => {
-					console.log(response);
+					//console.log(response);
 					this.oftenGoods = response.data;
 				})
 				.catch(error => {
@@ -288,7 +185,7 @@
 			//拉取分类商品数据
 			axios.post("http://jspang.com/DemoApi/typeGoods.php")
 				.then(response => {
-					console.log(response);
+					//console.log(response);
 					this.typeFoodData.typeFoodHamburger = response.data[0];
 					this.typeFoodData.typeFoodSnack = response.data[1];
 					this.typeFoodData.typeFoodDrink = response.data[2];
